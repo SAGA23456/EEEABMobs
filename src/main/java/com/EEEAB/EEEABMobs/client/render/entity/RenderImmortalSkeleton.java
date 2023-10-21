@@ -1,0 +1,38 @@
+package com.EEEAB.EEEABMobs.client.render.entity;
+
+import com.EEEAB.EEEABMobs.EEEABMobs;
+import com.EEEAB.EEEABMobs.client.model.entity.ModelImmortalSkeleton;
+import com.EEEAB.EEEABMobs.client.render.layer.LayerGlow;
+import com.EEEAB.EEEABMobs.sever.entity.impl.immortal.AbstractImmortalSkeleton;
+import com.EEEAB.EEEABMobs.sever.entity.impl.immortal.EntityImmortalKnight;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.resources.ResourceLocation;
+
+public class RenderImmortalSkeleton extends MobRenderer<AbstractImmortalSkeleton, ModelImmortalSkeleton> {
+
+    public RenderImmortalSkeleton(EntityRendererProvider.Context context) {
+        super(context, new ModelImmortalSkeleton(), 0.5F);
+        this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
+        this.addLayer(new LayerGlow<>(this, new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton_glow.png")));
+    }
+
+    @Override
+    protected float getFlipDegrees(AbstractImmortalSkeleton entity) {
+        return 0;//获取死亡翻转角度
+    }
+
+    @Override
+    protected void scale(AbstractImmortalSkeleton entity, PoseStack poseStack, float partialTickTime) {
+        if (entity instanceof EntityImmortalKnight) {
+            poseStack.scale(1.2F, 1.2F, 1.2F);
+        }
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(AbstractImmortalSkeleton entity) {
+        return new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton.png");
+    }
+}

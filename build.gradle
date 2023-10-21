@@ -1,0 +1,143 @@
+buildscript {
+    repositories {
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    // This should be below the net.minecraftforge.gradle plugin
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+}
+
+
+repositories {
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+//    maven {
+//        name = "GeckoLib maven"
+//        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+//    }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+    maven {
+        name = "CurseMaven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
+
+apply plugin: "maven-publish"
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: 'org.spongepowered.mixin'
+//mixin {
+//    add sourceSets.main, "eeeabsmobs.mixins.json"
+//}
+
+
+version = "${minecraft_version}-${mod_version}"
+group = 'com.EEEAB.eeeabsmobs'
+archivesBaseName = 'eeeabsmobs'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+
+println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+minecraft {
+    mappings channel: mapping_channel, version: mapping_version
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    copyIdeResources = true
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${'mod_id'}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', 'eeeabsmobs'
+        }
+
+        server {
+            property 'forge.enabledGameTestNamespaces', 'eeeabsmobs'
+            args '--nogui'
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', "eeeabsmobs"
+        }
+
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', "eeeabsmobs", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation fg.deobf("curse.maven:citadel-331936:4744075")
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
+    runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
+//    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20.1:4.2.2')
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "eeeabsmobs",
+                "Specification-Vendor"    : "EEEAB",
+                "Specification-Version"   : "${mod_version}", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${mod_version}",
+                "Implementation-Vendor"   : "EEEAB",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

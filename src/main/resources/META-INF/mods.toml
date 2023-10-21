@@ -1,0 +1,43 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="GNU LESSER GENERAL PUBLIC LICENSE"
+
+[[mods]]
+    modId="eeeabsmobs"
+    version="0.2"
+    displayName="EEEAB's Mobs"
+    logoFile="banner.png"
+    authors="EEEAB"
+    description='''EEEAB's Mobs adds a variety of challenging mobs to your Minecraft world!'''
+
+[[dependencies.eeeabsmobs]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.eeeabsmobs]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+# [[dependencies.eeeabsmobs]]
+#     modId="geckolib"
+#     mandatory=true
+#     versionRange="[4.2,)"
+#     ordering="NONE"
+#     side="BOTH"
+
+#复制自Alex's Mobs mods.toml
+[[dependencies.eeeabsmobs]] #optional
+    # the modid of the dependency
+    modId="citadel" #mandatory
+    # Does this dependency have to exist - if not, ordering below must be specified
+    mandatory=true #mandatory
+    # The version range of the dependency
+    versionRange="[2.4.4,)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="AFTER"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"
