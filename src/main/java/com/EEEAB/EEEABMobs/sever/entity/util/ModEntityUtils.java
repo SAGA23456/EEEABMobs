@@ -135,7 +135,7 @@ public class ModEntityUtils {
 
     //判断是否开启生物破坏规则
     public static boolean canMobDestroy(Entity entity) {
-        return !ForgeEventFactory.getMobGriefingEvent(entity.level(), entity);
+        return ForgeEventFactory.getMobGriefingEvent(entity.level(), entity);
     }
 
     //击退生物(受事件影响)

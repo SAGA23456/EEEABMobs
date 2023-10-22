@@ -698,7 +698,7 @@ public class EntityImmortalShaman extends EntityImmortal implements IEntity, Ran
                 return false;
             } else if (!noConflictingTasks()) {
                 return false;
-            } else if (ModEntityUtils.canMobDestroy(EntityImmortalShaman.this)) {
+            } else if (!ModEntityUtils.canMobDestroy(EntityImmortalShaman.this)) {
                 return false;
             } else if (tickCount >= this.nextAttackTickCount) {
                 List<Sheep> sheepList = level().getNearbyEntities(Sheep.class, this.wololoTargeting, EntityImmortalShaman.this, getBoundingBox().inflate(16, 4, 16));
