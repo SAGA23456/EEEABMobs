@@ -140,7 +140,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     private boolean FIRST = true;
     private int attackTick;
     private static final int MADNESS_TICK = 1300;/* 时长正好是BGM高潮部分的时长 */
-    private static final int USE_SKILL_TIME_OUT_MAX_LIMIT = 200;
+    private static final int USE_SKILL_TIME_OUT_MAX_LIMIT = 300;
     private final static int MAX_NEXT_MADNESS_TICK = 900;
     private final static int MIN_NEXT_MADNESS_TICK = 600;
     private final static int MAX_SMASH_ATTACK_TICK = 200;
@@ -439,8 +439,14 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             if (!this.active && this.getAnimation() != ACTIVATE_ANIMATION) {
                 if (EEConfigHandler.COMMON.MOB.GUARDIAN.enableNonCombatHeal.get()) this.heal(0.5F);
             }
-            if (this.active && getTarget() != null && this.targetDistance < 5.0f && this.isPowered() && (this.laserTick <= 0 || this.pounceTick <= 0))
-                this.noUseSkillFromLongTick++;
+            if (this.active && getTarget() != null && this.targetDistance < 6.0f && this.isPowered()){
+                if (this.laserTick <= 0) {
+                    this.noUseSkillFromLongTick++;
+                }
+                if (this.pounceTick <= 0) {
+                    this.noUseSkillFromLongTick++;
+                }
+            }
         }
 
         if (!this.isActive()) {
