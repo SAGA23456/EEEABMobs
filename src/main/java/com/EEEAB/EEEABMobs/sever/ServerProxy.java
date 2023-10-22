@@ -2,11 +2,14 @@ package com.EEEAB.EEEABMobs.sever;
 
 import com.EEEAB.EEEABMobs.EEEABMobs;
 
+import com.EEEAB.EEEABMobs.sever.config.EEConfigHandler;
 import com.EEEAB.EEEABMobs.sever.message.MessagePlayerUseAbility;
 import com.EEEAB.EEEABMobs.sever.message.MessageUseAbility;
 import com.EEEAB.EEEABMobs.sever.message.MessageVertigoEffect;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.network.NetworkRegistry;
 
 public class ServerProxy {
@@ -17,7 +20,7 @@ public class ServerProxy {
         return id++;
     }
 
-    public  void registerMessage() {
+    public void registerMessage() {
         EEEABMobs.NETWORK = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(EEEABMobs.MOD_ID, "net"))
                 .networkProtocolVersion(() -> VERSION)
                 .clientAcceptedVersions(VERSION::equals)
@@ -29,6 +32,8 @@ public class ServerProxy {
     }
 
     public void init(IEventBus bus){
+        /* 配置文件 */
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EEConfigHandler.SPEC);
     }
 
     public Object getISTERProperties() {

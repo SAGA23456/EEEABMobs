@@ -4,7 +4,6 @@ import com.EEEAB.EEEABMobs.client.ClientProxy;
 import com.EEEAB.EEEABMobs.sever.ServerProxy;
 import com.EEEAB.EEEABMobs.sever.handler.HandlerServerEvent;
 import com.EEEAB.EEEABMobs.sever.util.ModCreativeModeTabGroup;
-import com.EEEAB.EEEABMobs.sever.config.EEConfigHandler;
 import com.EEEAB.EEEABMobs.sever.init.*;
 import com.EEEAB.EEEABMobs.sever.handler.HandlerCapability;
 import com.EEEAB.EEEABMobs.sever.init.StructuresInit;
@@ -12,9 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -45,8 +42,6 @@ public class EEEABMobs {
         bus.addListener(this::init);
         bus.addListener(HandlerCapability::registerCapabilities);
 
-        /* 配置文件 */
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, EEConfigHandler.SPEC, EEEABMobs.MOD_ID + "-config.toml");
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new HandlerServerEvent());
