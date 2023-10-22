@@ -119,7 +119,7 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
                 if (entity.targetDistance > 1.8 || entity.getTarget() == null)
                     entity.move(MoverType.SELF, new Vec3(Math.cos(Math.toRadians(entity.getYRot() + 90)) * 2.5, 0, Math.sin(Math.toRadians(entity.getYRot() + 90)) * 2.5));
             } else if (tick == 15) {
-                List<LivingEntity> entities = entity.getNearByLivingEntities(range + 0.8F, 5.0F, range + 0.8F, range + 0.8F);
+                List<LivingEntity> entities = entity.getNearByLivingEntities(range + 0.4F, 5.0F, range + 0.4F, range + 0.4F);
                 for (LivingEntity hitEntity : entities) {
                     entity.guardianHurtTarget(entity, hitEntity, 0.1F, 1.0F, baseDamageMultiplier, true, true);
                     entity.playSound(SoundInit.GIANT_AXE_HIT.get(), 1.5F, 0.2F);
