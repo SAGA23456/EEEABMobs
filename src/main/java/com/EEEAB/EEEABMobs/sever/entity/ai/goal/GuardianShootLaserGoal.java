@@ -35,7 +35,7 @@ public class GuardianShootLaserGoal extends AnimationCommonGoal<EntityNamelessGu
                 this.entity.getLookControl().setLookAt(entityTarget, 90F, 90F);
             }
         } else if (tick >= 22 && tick < 100) {
-            float yMaxRotSpeed = 1 + Mth.clamp(1.8F - Math.abs(this.entity.targetDistance) * 0.1F, 0F, 1.8F);
+            float yMaxRotSpeed = 1 + Mth.clamp(2F - Math.abs(this.entity.targetDistance) * 0.1F, 0F, 2F);
             float xMaxRotAngle = 90F;
             if (entityTarget != null) {
                 this.entity.getLookControl().setLookAt(entityTarget.getX(), entityTarget.getY() + entityTarget.getBbHeight() / 2, entityTarget.getZ(), yMaxRotSpeed, xMaxRotAngle);
