@@ -3,7 +3,6 @@ package com.EEEAB.EEEABMobs.client;
 import com.EEEAB.EEEABMobs.client.render.util.EEItemStackRenderProperties;
 import com.EEEAB.EEEABMobs.sever.ServerProxy;
 import com.EEEAB.EEEABMobs.sever.handler.HandlerClientEvent;
-import com.EEEAB.EEEABMobs.sever.handler.HandlerRegister;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
