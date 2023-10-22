@@ -1,5 +1,6 @@
 package com.EEEAB.EEEABMobs.sever.handler;
 
+import com.EEEAB.EEEABMobs.EEEABMobs;
 import com.EEEAB.EEEABMobs.sever.capability.VertigoCapability;
 import com.EEEAB.EEEABMobs.sever.config.EEConfigHandler;
 import com.EEEAB.EEEABMobs.sever.entity.impl.effect.EntityCameraShake;
@@ -14,8 +15,10 @@ import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 //客户端处理器
+//@Mod.EventBusSubscriber(modid = EEEABMobs.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)
 public class HandlerClientEvent {
     //改变玩家相机角度

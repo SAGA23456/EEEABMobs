@@ -29,19 +29,19 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-//注册处理器
+//渲染处理器
 @Mod.EventBusSubscriber(modid = EEEABMobs.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class HandlerRegister {
-    @SubscribeEvent
-    public static void setEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
-        event.put(EntityInit.IMMORTAL_SKELETON.get(), EntityImmortalSkeleton.setAttributes().build());
-        event.put(EntityInit.IMMORTAL_KNIGHT.get(), EntityImmortalKnight.setAttributes().build());
-        event.put(EntityInit.IMMORTAL_SHAMAN.get(), EntityImmortalShaman.setAttributes().build());
-        event.put(EntityInit.IMMORTAL_GOLEM.get(), EntityImmortalGolem.setAttributes().build());
-        event.put(EntityInit.NAMELESS_GUARDIAN.get(), EntityNamelessGuardian.setAttributes().build());
-        event.put(EntityInit.TESTLLAGER.get(), EntityTestllager.setAttributes().build());
-        event.put(EntityInit.TEST.get(), setCommonAttributes());
-    }
+    //@SubscribeEvent
+    //public static void setEntityAttributeCreationEvent(EntityAttributeCreationEvent event) {
+    //    event.put(EntityInit.IMMORTAL_SKELETON.get(), EntityImmortalSkeleton.setAttributes().build());
+    //    event.put(EntityInit.IMMORTAL_KNIGHT.get(), EntityImmortalKnight.setAttributes().build());
+    //    event.put(EntityInit.IMMORTAL_SHAMAN.get(), EntityImmortalShaman.setAttributes().build());
+    //    event.put(EntityInit.IMMORTAL_GOLEM.get(), EntityImmortalGolem.setAttributes().build());
+    //    event.put(EntityInit.NAMELESS_GUARDIAN.get(), EntityNamelessGuardian.setAttributes().build());
+    //    event.put(EntityInit.TESTLLAGER.get(), EntityTestllager.setAttributes().build());
+    //    event.put(EntityInit.TEST.get(), setCommonAttributes());
+    //}
 
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
