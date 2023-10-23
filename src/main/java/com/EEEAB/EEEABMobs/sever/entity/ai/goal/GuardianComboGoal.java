@@ -43,11 +43,11 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
         if (entity.getAnimation() == EntityNamelessGuardian.ATTACK_ANIMATION_1) {
             int tick = entity.getAnimationTick();
             int lookAtFrame = isPowered ? 19 : 15;
-            float attackArc1 = attackArc - 20;
             //如果是狂化状态,则追加攻击力的40%
             float baseDamageMultiplier = isPowered ? 1.4F : 1.0F;
             if (tick < lookAtFrame && target != null) {
-                entity.getLookControl().setLookAt(target, 30F, 30F);
+                //entity.getLookControl().setLookAt(target, 30F, 30F);
+                entity.lookAt(target, 30F, 30F);
             } else {
                 entity.setYRot(entity.yRotO);
             }
@@ -59,7 +59,7 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
                 for (LivingEntity hitEntity : entities) {
                     float entityRelativeAngle = ModEntityUtils.getTargetRelativeAngle(entity, hitEntity);
                     float entityHitDistance = (float) Math.sqrt((hitEntity.getZ() - entity.getZ()) * (hitEntity.getZ() - entity.getZ()) + (hitEntity.getX() - entity.getX()) * (hitEntity.getX() - entity.getX())) - hitEntity.getBbWidth() / 2F;
-                    if ((entityHitDistance <= range && (entityRelativeAngle <= attackArc1 / 2F && entityRelativeAngle >= -attackArc1 / 2F) || (entityRelativeAngle >= 360 - attackArc1 / 2F || entityRelativeAngle <= -360 + attackArc1 / 2F))) {
+                    if ((entityHitDistance <= range && (entityRelativeAngle <= 10F && entityRelativeAngle >= -(attackArc + 20) / 2F) || (entityRelativeAngle >= 360 - attackArc / 2F || entityRelativeAngle <= -360 + attackArc / 2F))) {
                         entity.guardianHurtTarget(entity, hitEntity, 0.05F, 1.0F, baseDamageMultiplier, true, true);
                         double ratioX = Math.sin(entity.getYRot() * ((float) Math.PI / 180F));
                         double ratioZ = (-Math.cos(entity.getYRot() * ((float) Math.PI / 180F)));
@@ -81,7 +81,8 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
             /* 如果是狂化状态,则追加基础攻击力的50% */
             float baseDamageMultiplier = isPowered ? 1.5F : 1F;
             if (tick < lookAtFrame && target != null) {
-                entity.getLookControl().setLookAt(target, 30F, 30F);
+                //entity.getLookControl().setLookAt(target, 30F, 30F);
+                entity.lookAt(target, 30F, 30F);
             } else {
                 entity.setYRot(entity.yRotO);
             }
@@ -98,7 +99,7 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
                         entity.playSound(SoundInit.GIANT_AXE_HIT.get(), 1.5F, 0.2F);
                         double ratioX = Math.sin(entity.getYRot() * ((float) Math.PI / 180F));
                         double ratioZ = (-Math.cos(entity.getYRot() * ((float) Math.PI / 180F)));
-                        ModEntityUtils.forceKnockBack(hitEntity, 0.5F, ratioX, ratioZ, 1.0F, false);
+                        ModEntityUtils.forceKnockBack(hitEntity, 0.35F, ratioX, ratioZ, 1.0F, false);
                     }
                 }
             } else if (tick == 25) {
@@ -111,7 +112,8 @@ public class GuardianComboGoal extends AnimationAbstractGoal<EntityNamelessGuard
             int tick = entity.getAnimationTick();
             float baseDamageMultiplier = isPowered ? 1.5F : 1.2F;
             if (tick < 15 && target != null) {
-                entity.getLookControl().setLookAt(target, 30F, 30F);
+                //entity.getLookControl().setLookAt(target, 30F, 30F);
+                entity.lookAt(target, 30F, 30F);
             } else {
                 entity.setYRot(entity.yRotO);
             }
