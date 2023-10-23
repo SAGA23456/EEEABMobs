@@ -69,7 +69,8 @@ public class GuardianPounceAttackGoal extends AnimationAbstractGoal<EntityNamele
             int animationDuration = EntityNamelessGuardian.POUNCE_ATTACK_ANIMATION_1.getDuration();
             this.entity.setDeltaMovement(0, this.entity.onGround() ? 0 : this.entity.getDeltaMovement().y(), 0);
             if (target != null) {
-                this.entity.getLookControl().setLookAt(target, 30F, 30F);
+                //this.entity.getLookControl().setLookAt(target, 30F, 30F);
+                entity.lookAt(target,30F,30F);
             }
             int tick = this.entity.getAnimationTick();
             if (tick == 1) {

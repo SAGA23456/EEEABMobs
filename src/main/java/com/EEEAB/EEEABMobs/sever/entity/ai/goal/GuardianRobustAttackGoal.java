@@ -26,7 +26,8 @@ public class GuardianRobustAttackGoal extends AnimationCommonGoal<EntityNameless
         LivingEntity target = entity.getTarget();
         entity.setDeltaMovement(0, entity.onGround() ? 0 : entity.getDeltaMovement().y(), 0);
         if (tick < 32 && target != null) {
-            entity.getLookControl().setLookAt(target, 30F, 30F);
+            //entity.getLookControl().setLookAt(target, 30F, 30F);
+            entity.lookAt(target,30F,30F);
         } else {
             entity.setYRot(entity.yRotO);
         }

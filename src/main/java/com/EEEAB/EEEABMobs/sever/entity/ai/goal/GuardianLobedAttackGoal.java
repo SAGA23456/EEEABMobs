@@ -26,7 +26,8 @@ public class GuardianLobedAttackGoal extends AnimationCommonGoal<EntityNamelessG
         int maxFallingDistance = isPowered ? 8 : 6;
         int tick = entity.getAnimationTick();
         LivingEntity target = entity.getTarget();
-        if (target != null) entity.getLookControl().setLookAt(target, 30F, 30F);
+        //if (target != null) entity.getLookControl().setLookAt(target, 30F, 30F);
+        if (target != null) entity.lookAt(target, 30F, 30F);
         if ((!isPowered && tick >= 22 && tick < 34) || (isPowered && tick >= 22 && tick < 40)) {
             if (tick == 23) {
                 entity.playSound(SoundEvents.GENERIC_EXPLODE, 1.5F, 1F + entity.getRandom().nextFloat() * 0.1F);
