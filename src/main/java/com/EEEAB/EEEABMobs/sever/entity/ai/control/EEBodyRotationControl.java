@@ -7,8 +7,8 @@ import net.minecraft.world.entity.ai.control.BodyRotationControl;
 public class EEBodyRotationControl extends BodyRotationControl {
     private static final float MAX_ROTATE = 75;
     private final Mob mob;
-    private int rotateTime;
-    private float targetYawHead;
+    private int headStableTime;
+    private float lastStableYHeadRot;
 
     public EEBodyRotationControl(Mob mob) {
         super(mob);
@@ -23,27 +23,27 @@ public class EEBodyRotationControl extends BodyRotationControl {
         //double d1 = this.mob.getZ() - this.mob.zo;
         double dsq = dx * dx + dz * dz;
         //实体正在移动
-        if (dsq > (double) 2.5000003E-7F) {
+        if (dsq > 2.5E-7F) {
             double moveAngle = (float) Mth.atan2(dz, dx) * (180 / (float) Math.PI) - 90;
             mob.yBodyRot += Mth.wrapDegrees(moveAngle - mob.yBodyRot) * 0.6F;
             this.rotateHeadIfNecessary();
-            this.targetYawHead = this.mob.yHeadRot;
-            this.rotateTime = 0;
+            this.lastStableYHeadRot = this.mob.yHeadRot;
+            this.headStableTime = 0;
             //this.mob.yBodyRot = this.mob.getYRot();
             //this.targetYawHead = this.mob.yHeadRot;
             //this.rotateTime = 0;
         } else {
             if (this.notCarryingMobPassengers()) {
                 float limit = MAX_ROTATE;
-                if (Math.abs(this.mob.yHeadRot - this.targetYawHead) > 15) {
-                    this.rotateTime = 0;
-                    this.targetYawHead = this.mob.yHeadRot;
+                if (Math.abs(this.mob.yHeadRot - this.lastStableYHeadRot) > 15) {
+                    this.headStableTime = 0;
+                    this.lastStableYHeadRot = this.mob.yHeadRot;
                     this.rotateBodyIfNecessary();
                 } else {
-                    rotateTime++;
+                    headStableTime++;
                     final int speed = 10;
-                    if (rotateTime > speed) {
-                        limit = Math.max(1 - (rotateTime - speed) / (float) speed, 0) * MAX_ROTATE;
+                    if (headStableTime > speed) {
+                        limit = Math.max(1 - (headStableTime - speed) / (float) speed, 0) * MAX_ROTATE;
                     }
                 }
                 mob.yBodyRot = approach(mob.yHeadRot, mob.yBodyRot, limit);
@@ -68,7 +68,7 @@ public class EEBodyRotationControl extends BodyRotationControl {
     private boolean isMoving() {
         double d0 = this.mob.getX() - this.mob.xo;
         double d1 = this.mob.getZ() - this.mob.zo;
-        return d0 * d0 + d1 * d1 > (double) 2.5000003E-7F;
+        return d0 * d0 + d1 * d1 > 2.5E-7;
     }
 
     private void rotateBodyIfNecessary() {
