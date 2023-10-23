@@ -393,15 +393,16 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         floatGuardian();
         this.coreControlled.updatePrevTimer();
 
-        if (getAnimation() != ATTACK_ANIMATION_1 && getAnimation() != ATTACK_ANIMATION_2 &&
-                getAnimation() != ATTACK_ANIMATION_3 && getAnimation() != POUNCE_ATTACK_ANIMATION_2)
-            this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
-        else if (getAnimation() == ATTACK_ANIMATION_1 && getAnimationTick() > 21)
-            this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
-        else if (getAnimation() == ATTACK_ANIMATION_2 && getAnimationTick() > 16)
-            this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
-        else if (getAnimation() == ATTACK_ANIMATION_3 && getAnimationTick() > 16)
-            this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
+        //if (getAnimation() != ATTACK_ANIMATION_1 && getAnimation() != ATTACK_ANIMATION_2 &&
+        //        getAnimation() != ATTACK_ANIMATION_3 && getAnimation() != POUNCE_ATTACK_ANIMATION_2)
+        //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
+        //else if (getAnimation() == ATTACK_ANIMATION_1 && getAnimationTick() > 21)
+        //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
+        //else if (getAnimation() == ATTACK_ANIMATION_2 && getAnimationTick() > 16)
+        //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
+        //else if (getAnimation() == ATTACK_ANIMATION_3 && getAnimationTick() > 16)
+        //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
+        this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
 
         AnimationHandler.INSTANCE.updateAnimations(this);
 
@@ -439,7 +440,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             if (!this.active && this.getAnimation() != ACTIVATE_ANIMATION) {
                 if (EEConfigHandler.COMMON.MOB.GUARDIAN.enableNonCombatHeal.get()) this.heal(0.5F);
             }
-            if (this.active && getTarget() != null && this.targetDistance < 6.0f && this.isPowered()){
+            if (this.active && getTarget() != null && this.targetDistance < 6.0f && this.isPowered()) {
                 if (this.laserTick <= 0) {
                     this.noUseSkillFromLongTick++;
                 }
@@ -1181,7 +1182,8 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     public boolean guardianHurtTarget(DamageSource damageSource, EntityNamelessGuardian guardian, LivingEntity hitEntity, float hitEntityMaxHealth, float baseDamageMultiplier, float damageMultiplier, boolean shouldHeal, boolean disableShield) {
         float finalDamage = ((guardian.getAttackDamageAttributeValue() * baseDamageMultiplier) + hitEntity.getMaxHealth() * hitEntityMaxHealth) * damageMultiplier;
         boolean flag = hitEntity.hurt(damageSource, finalDamage);
-        if (flag && shouldHeal) guardian.heal(finalDamage * 0.2F);
+        double suckBloodCap = EEConfigHandler.COMMON.MOB.GUARDIAN.suckBloodFactor.get();
+        if (flag && shouldHeal) guardian.heal((float) Mth.clamp(finalDamage * 0.2F, 0F, getMaxHealth() * suckBloodCap));
         if (disableShield && hitEntity instanceof Player player && player.isBlocking()) {
             player.disableShield(true);
             flag = true;
