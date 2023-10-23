@@ -118,10 +118,10 @@ public class EEConfigHandler {
     public static class Shaman {
         public Shaman(final ForgeConfigSpec.Builder builder) {
             builder.push("Immortal Shaman");
-            combatConfig = new AttributeConfig(1, 1);
-            maximumDamageCap = new GeneralDamageCap(0.2F);
             healValue = BUILDER.comment("Immortal Shaman heal values").
                     defineInRange("Heal values", 16, 0D, Double.MAX_VALUE);
+            combatConfig = new AttributeConfig(1, 1);
+            maximumDamageCap = new GeneralDamageCap(0.2F);
             builder.pop();
         }
 
@@ -144,9 +144,11 @@ public class EEConfigHandler {
     //无名守卫者
     public static class Guardian {
         public Guardian(final ForgeConfigSpec.Builder builder) {
-            builder.push("The Nameless guardian");
-            this.enableNonCombatHeal = BUILDER.comment("If False disable non-combat heal").
+            builder.push("The Nameless Guardian");
+            enableNonCombatHeal = BUILDER.comment("If False disable non-combat heal").
                     define("Enable non-combat heal", true);
+            suckBloodFactor = BUILDER.comment("The upper limit of vampire is based on the percentage of maximum health").
+                    defineInRange("Suck blood factor", 0.05, 0, 1);
             combatConfig = new AttributeConfig(1, 1);
             maximumDamageCap = new GeneralDamageCap(0.025F);
             builder.pop();
@@ -154,6 +156,8 @@ public class EEConfigHandler {
 
         //启用脱战治疗
         public final ForgeConfigSpec.BooleanValue enableNonCombatHeal;
+        //吸血系数上限(基于最大生命值的百分比)
+        public final ForgeConfigSpec.DoubleValue suckBloodFactor;
         public final AttributeConfig combatConfig;
         public final GeneralDamageCap maximumDamageCap;
     }
