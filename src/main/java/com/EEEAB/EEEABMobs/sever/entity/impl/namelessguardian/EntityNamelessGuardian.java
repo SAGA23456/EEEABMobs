@@ -279,6 +279,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     protected void onAnimationStart(Animation animation) {
         if (!this.level().isClientSide) {
             if (animation == WEAK_ANIMATION_1) {
+                this.setExecuteWeak(true);
                 this.setPowered(false);
                 this.setNextMadnessTick(getCoolingTimerUtil(MAX_NEXT_MADNESS_TICK, MIN_NEXT_MADNESS_TICK, 0.5F));
             } else if (animation == POUNCE_ATTACK_ANIMATION_1 || animation == LASER_ANIMATION) {
@@ -402,7 +403,6 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
         //else if (getAnimation() == ATTACK_ANIMATION_3 && getAnimationTick() > 16)
         //    this.pushEntitiesAway(1.6F, getBbHeight(), 1.6F, 1.6F);
-        this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
 
         AnimationHandler.INSTANCE.updateAnimations(this);
 
@@ -431,7 +431,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             }
 
             if (!this.executeWeak) {
-                this.setYRot(this.yBodyRot);
+                //this.setYRot(this.yBodyRot);
                 if (!this.isUnnatural() && this.getTarget() == null && this.getNavigation().isDone() && !this.isAtRestPos() && this.isActive()) {
                     this.moveToRestPos();
                 }
@@ -450,6 +450,8 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             }
         }
 
+        this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
+
         if (!this.isActive()) {
             this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
         }
@@ -459,7 +461,6 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         } else {
             this.coreControlled.decreaseTimer();
         }
-
 
         if (this.getAnimation() != NO_ANIMATION
                 && this.getAnimation() != POUNCE_ATTACK_ANIMATION_1
@@ -526,8 +527,10 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         }
 
         if (this.getAnimation() == ACTIVATE_ANIMATION) {
-            if (this.getTarget() != null && tick > 40) {
-                this.getLookControl().setLookAt(this.getTarget(), 30F, 30F);
+            LivingEntity target = getTarget();
+            if (target != null && tick > 40) {
+                //this.getLookControl().setLookAt(target, 30F, 30F);
+                this.lookAt(target, 30F, 30F);
             }
         }
 
