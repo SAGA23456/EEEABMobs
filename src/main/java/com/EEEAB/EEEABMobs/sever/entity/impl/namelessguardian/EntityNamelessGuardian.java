@@ -430,9 +430,9 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 }
             }
 
-            if (!this.executeWeak) {
+            if (!this.isUnnatural()) {
                 //this.setYRot(this.yBodyRot);
-                if (!this.isUnnatural() && this.getTarget() == null && this.getNavigation().isDone() && !this.isAtRestPos() && this.isActive()) {
+                if (this.noConflictingTasks() && this.getTarget() == null && this.getNavigation().isDone() && !this.isAtRestPos() && this.isActive()) {
                     this.moveToRestPos();
                 }
             }
