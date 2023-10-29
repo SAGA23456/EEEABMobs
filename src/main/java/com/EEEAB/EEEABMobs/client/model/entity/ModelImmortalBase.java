@@ -3,7 +3,6 @@ package com.EEEAB.EEEABMobs.client.model.entity;
 import com.EEEAB.EEEABMobs.sever.entity.impl.immortal.EntityImmortal;
 import com.github.alexthe666.citadel.animation.Animation;
 import com.github.alexthe666.citadel.animation.IAnimatedEntity;
-import com.github.alexthe666.citadel.client.model.AdvancedEntityModel;
 import com.github.alexthe666.citadel.client.model.AdvancedModelBox;
 import com.github.alexthe666.citadel.client.model.ModelAnimator;
 import net.minecraftforge.api.distmarker.Dist;

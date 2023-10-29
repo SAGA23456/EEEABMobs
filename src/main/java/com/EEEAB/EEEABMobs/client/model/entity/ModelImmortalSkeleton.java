@@ -86,14 +86,6 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         body.addChild(heart);
         heart.setTextureOffset(104, 20).addBox(-2.5F, -3.8F, -1.75F, 6.0F, 7.6F, 4.0F, -1.0F);
 
-        //PartDefinition body = upper.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 18).addBox(-4.0F, 0.75F, -1.75F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-0.5F, -12.75F, 0.0F));
-
-        //PartDefinition hemal = body.addOrReplaceChild("hemal", CubeListBuilder.create().texOffs(90, 36).addBox(-4.8F, -0.4F, -1.35F, 9.6F, 2.8F, 3.2F, new CubeDeformation(-1.0F)), PartPose.offset(0.0F, 0.75F, 0.0F));
-        //
-        //		PartDefinition hemal_r1 = hemal.addOrReplaceChild("hemal_r1", CubeListBuilder.create().texOffs(90, 36).addBox(-5.8F, -1.4F, -1.6F, 15.6F, 2.8F, 3.2F, new CubeDeformation(-1.0F)), PartPose.offsetAndRotation(0.0F, 3.0F, 0.25F, 0.0F, 0.0F, 1.5708F));
-        //
-        //		PartDefinition heart = body.addOrReplaceChild("heart", CubeListBuilder.create().texOffs(104, 20).addBox(-2.5F, -3.8F, -1.75F, 6.0F, 7.6F, 4.0F, new CubeDeformation(-1.0F)), PartPose.offset(-0.5F, 3.75F, 0.0F));
-
         outerBody = new AdvancedModelBox(this, "outerBody");
         outerBody.setPos(0.0F, 0.0F, 0.0F);
         body.addChild(outerBody);
@@ -120,7 +112,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorLeftArm.setPos(0.0F, 0.0F, 0.0F);
         leftArm.addChild(armorLeftArm);
         //armorLeftArm.mirror=true;
-        armorLeftArm.setTextureOffset(45, 1).addBox(-1.6F, -1.5F, -1.0F, 2.5F, 12.0F, 2.5F, 0.8F);
+        armorLeftArm.setTextureOffset(45, 1).addBox(-1.1F, -2.0F, -1.0F, 2.5F, 12.0F, 2.5F, 1F);
 
         rightArm = new AdvancedModelBox(this, "rightArm");
         offsetAndRotation(rightArm, -6.0F, -10.5F, 0.0F, 0.0F, 0.0F, 0.0873F);
@@ -135,7 +127,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorRightArm = new AdvancedModelBox(this, "armorRightArm");
         armorRightArm.setPos(0.0F, 0.0F, 0.0F);
         rightArm.addChild(armorRightArm);
-        armorRightArm.setTextureOffset(45, 1).addBox(-1.5F, -1.5F, -1.0F, 2.5F, 12.0F, 2.5F, 0.8F);
+        armorRightArm.setTextureOffset(45, 1).addBox(-1.5F, -2.0F, -1.0F, 2.5F, 12.0F, 2.5F, 1F);
 
         lower = new AdvancedModelBox(this, "lower");
         lower.setPos(0.0F, 0.0F, 0.0F);
@@ -151,7 +143,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorLeftLeg.setPos(-0.2F, 0.0F, 0.0F);
         leftLeg.addChild(armorLeftLeg);
         //armorLeftLeg.mirror = true;
-        armorLeftLeg.setTextureOffset(58, 0).addBox(-1.7F, 0.0F, -1.0F, 3.0F, 12.0F, 4.0F, 0.6F);
+        armorLeftLeg.setTextureOffset(59, 1).addBox(-1.2F, 0.0F, -1.2F, 2.5F, 12.0F, 2.5F, 0.6F);
 
         rightLeg = new AdvancedModelBox(this, "rightLeg");
         rightLeg.setPos(-2.0F, -12.0F, 0.0F);
@@ -160,9 +152,9 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
 
         armorRightLeg = new AdvancedModelBox(this, "armorRightLeg");
         armorRightLeg.setPos(0.0F, 0.0F, 0.0F);
-        leftLeg.addChild(armorRightLeg);
+        rightLeg.addChild(armorRightLeg);
         //armorLeftLeg.mirror = true;
-        armorRightLeg.setTextureOffset(74, 0).addBox(-1.7F, 0.0F, -1.0F, 3.0F, 12.0F, 4.0F, 0.6F);
+        armorRightLeg.setTextureOffset(75, 1).addBox(-1.2F, 0.0F, -1.2F, 2.5F, 12.0F, 2.5F, 0.6F);
 
         animator = ModelAnimator.create();
         updateDefaultPose();
@@ -189,7 +181,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         //Walk
         float walkSpeed = 0.8F;
         float walkDegree = 0.8F;
-        if (entity instanceof EntityImmortalKnight) walkSpeed = 0.6F;
+        if (entity instanceof EntityImmortalKnight) walkSpeed = walkDegree = 0.6F;
         this.flap(this.root, walkSpeed, walkDegree * 0.05F, false, 0.0F, 0.0F, limbSwing, limbSwingAmount);
         this.flap(this.head, walkSpeed, 0.08F, true, 0.0F, 0.0F, limbSwing, limbSwingAmount);
         this.walk(this.leftLeg, walkSpeed, walkDegree * 1.2F, true, 0.0F, -0.05F, limbSwing, limbSwingAmount);
