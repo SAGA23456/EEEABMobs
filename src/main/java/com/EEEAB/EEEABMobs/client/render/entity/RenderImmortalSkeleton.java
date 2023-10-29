@@ -3,6 +3,7 @@ package com.EEEAB.EEEABMobs.client.render.entity;
 import com.EEEAB.EEEABMobs.EEEABMobs;
 import com.EEEAB.EEEABMobs.client.model.entity.ModelImmortalSkeleton;
 import com.EEEAB.EEEABMobs.client.render.layer.LayerGlow;
+import com.EEEAB.EEEABMobs.client.render.layer.LayerMobModelOuter;
 import com.EEEAB.EEEABMobs.sever.entity.impl.immortal.AbstractImmortalSkeleton;
 import com.EEEAB.EEEABMobs.sever.entity.impl.immortal.EntityImmortalKnight;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,6 +18,12 @@ public class RenderImmortalSkeleton extends MobRenderer<AbstractImmortalSkeleton
         super(context, new ModelImmortalSkeleton(), 0.5F);
         this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
         this.addLayer(new LayerGlow<>(this, new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton_glow.png")));
+        this.addLayer(new LayerMobModelOuter<>(this, new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton_armor.png"), false) {
+            @Override
+            protected boolean test(AbstractImmortalSkeleton immortalSkeleton) {
+                return immortalSkeleton instanceof EntityImmortalKnight;
+            }
+        });
     }
 
     @Override
