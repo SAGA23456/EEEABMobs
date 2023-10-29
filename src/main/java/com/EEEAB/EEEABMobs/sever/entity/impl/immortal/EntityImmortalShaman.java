@@ -2,9 +2,11 @@ package com.EEEAB.EEEABMobs.sever.entity.impl.immortal;
 
 import com.EEEAB.EEEABMobs.client.particle.util.ParticleComponent;
 import com.EEEAB.EEEABMobs.client.particle.util.anim.AnimData;
+import com.EEEAB.EEEABMobs.sever.entity.ai.control.EEBodyRotationControl;
 import com.EEEAB.EEEABMobs.sever.entity.ai.goal.EELookAtGoal;
 import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.base.AnimationCommonGoal;
 import com.EEEAB.EEEABMobs.sever.entity.NeedStopAiEntity;
+import com.EEEAB.EEEABMobs.sever.entity.ai.navigate.EEPathNavigateGround;
 import com.EEEAB.EEEABMobs.sever.handler.HandlerCapability;
 import com.EEEAB.EEEABMobs.sever.capability.VertigoCapability;
 import com.EEEAB.EEEABMobs.sever.config.EEConfigHandler;
@@ -38,9 +40,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -57,6 +61,7 @@ import com.github.alexthe666.citadel.animation.Animation;
 
 import javax.annotation.Nullable;
 
+import java.util.EnumSet;
 import java.util.List;
 
 //基本AI完成
@@ -416,6 +421,9 @@ public class EntityImmortalShaman extends EntityImmortal implements IEntity, Ran
             super(entity, animation);
         }
 
+        public ShamanAnimationCommonGoal(EntityImmortalShaman entity, Animation animation, EnumSet<Flag> interruptFlagTypes) {
+            super(entity, animation, interruptFlagTypes);
+        }
 
         @Override
         public void tick() {

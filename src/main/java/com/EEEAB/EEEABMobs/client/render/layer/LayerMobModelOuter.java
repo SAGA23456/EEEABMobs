@@ -31,11 +31,15 @@ public class LayerMobModelOuter<T extends LivingEntity, M extends AdvancedEntity
 
     @Override
     public void render(PoseStack stack, MultiBufferSource bufferSource, int packedLightIn, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        renderLayer(stack, bufferSource.getBuffer(RenderType.entityTranslucent(resourceLocation)), packedLightIn, entity);
+        if (test(entity))renderLayer(stack, bufferSource.getBuffer(RenderType.entityTranslucent(resourceLocation)), packedLightIn, entity);
     }
 
     private void renderLayer(PoseStack stack, VertexConsumer vertexConsumer, int packedLightIn, T entity) {
         int i = overlayTexture ? LivingEntityRenderer.getOverlayCoords(entity, 0F) : OverlayTexture.NO_OVERLAY;
         this.getParentModel().renderToBuffer(stack, vertexConsumer, packedLightIn, i, 1, 1, 1, 1);
+    }
+
+    protected boolean test(T entity) {
+        return true;
     }
 }

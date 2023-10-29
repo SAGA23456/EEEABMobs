@@ -67,9 +67,6 @@ public class EntityImmortalSkeleton extends AbstractImmortalSkeleton implements 
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
         } else {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ItemInit.IMMORTAL_AXE.get()));
-            if (randomSource.nextFloat() < 0.1F + difficultyIn.getSpecialMultiplier() * 0.5F) {
-                this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
-            }
         }
     }
 
@@ -82,6 +79,7 @@ public class EntityImmortalSkeleton extends AbstractImmortalSkeleton implements 
         this.populateDefaultEquipmentEnchantments(randomsource, difficultyIn);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
+
     @Override
     protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.88f;

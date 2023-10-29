@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -356,6 +358,12 @@ public abstract class EEEABMobEntity extends PathfinderMob {
                 entity.setDeltaMovement(-0.10 * Math.cos(angle), entity.getDeltaMovement().y, -0.10 * Math.sin(angle));
             }
         }
+    }
+
+    //指定坐标添加弧度
+    public Vec3 circlePosition(Vec3 targetVec3, float radius, float speed, boolean direction, int circleFrame, float offset) {
+        double theta = (direction ? 1 : -1) * circleFrame * 0.5 * speed / radius + offset;
+        return targetVec3.add(radius * Math.cos(theta), 0, radius * Math.sin(theta));
     }
 
 
