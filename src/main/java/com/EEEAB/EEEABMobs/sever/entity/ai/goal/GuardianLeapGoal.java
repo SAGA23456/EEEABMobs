@@ -23,6 +23,7 @@ public class GuardianLeapGoal extends AnimationCommonGoal<EntityNamelessGuardian
         if (target != null) {
             if (tick < 12) {
                 entity.getLookControl().setLookAt(target, 30F, 30F);
+                entity.lookAt(target, 30F, 30F);
             } else {
                 entity.setYRot(entity.yRotO);
                 if (tick == 12) {
