@@ -1581,6 +1581,69 @@ public class ModelNamelessGuardian extends EEAdvancedEntityModel<EntityNamelessG
             animator.rotate(axe, toRadians(-2.5), toRadians(-10), toRadians(20));
             animator.move(axe, 0, -1F, -5F);
             animator.endKeyframe();
+        } else if (animator.setAnimation(EntityNamelessGuardian.CONCUSSION_ANIMATION)) {
+            animator.startKeyframe(0);
+            animator.rotate(head, 0, 0, 0);
+            animator.rotate(upper, 0, 0, 0);
+            animator.move(upper, 0, 0, 0);
+            animator.rotate(rightArm, toRadians(-30), toRadians(25), toRadians(25));
+            animator.rotate(rightArmUnder, toRadians(-95), 0, 0);
+            animator.rotate(leftArm, 0, 0, 0);
+            animator.rotate(leftArmUnder, 0, 0, 0);
+            animator.rotate(lower, 0, 0, 0);
+            animator.rotate(leftLeg, 0, 0, 0);
+            animator.move(leftLeg, 0, 0, 0);
+            animator.rotate(leftLegUnder, 0, 0, 0);
+            animator.rotate(rightLeg, 0, 0, 0);
+            animator.move(rightLeg, 0, 0, 0);
+            animator.rotate(rightLegUnder, 0, 0, 0);
+            animator.rotate(axe, toRadians(-2.5), toRadians(-10), toRadians(20));
+            animator.move(axe, 0, -1F, -5F);
+            animator.endKeyframe();
+
+            animator.startKeyframe(4);
+            animator.rotate(head, toRadians(30), 0, 0);
+            animator.rotate(root, 0, 0, 0);
+            animator.rotate(upper, toRadians(-2.5), 0, 0);
+            animator.move(upper, 0, -1, 0);
+            animator.rotate(rightArm, toRadians(-77), toRadians(4), toRadians(12));
+            animator.rotate(rightArmUnder, toRadians(-17.5), toRadians(-20), toRadians(-10));
+            animator.rotate(leftArm, toRadians(-77), toRadians(-4), toRadians(-12));
+            animator.rotate(leftArmUnder, toRadians(-17.5), toRadians(20), toRadians(10));
+            animator.rotate(lower, 0, toRadians(2.5), 0);
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-7.5));
+            animator.move(leftLeg, 0.5F, 0, 0);
+            animator.rotate(leftLegUnder, toRadians(5), 0, 0);
+            animator.rotate(rightLeg, toRadians(15), toRadians(7.5), toRadians(7.5));
+            animator.move(rightLeg, -0.5F, 0, 0);
+            animator.rotate(rightLegUnder, toRadians(5), 0, 0);
+            animator.rotate(axe, toRadians(10), 0, 0);
+            animator.move(axe, 0, -1, 0);
+            animator.endKeyframe();
+
+            animator.startKeyframe(4);
+            animator.rotate(head, toRadians(20), toRadians(-10), 0);
+            animator.rotate(root, toRadians(-2.5), 0, 0);
+            animator.rotate(upper, toRadians(-22.5), toRadians(10), 0);
+            animator.move(upper, 0, 1, 0);
+            animator.rotate(rightArm, toRadians(-29), toRadians(30), toRadians(19));
+            animator.rotate(rightArmUnder, toRadians(-17.5), toRadians(-30), toRadians(-10));
+            animator.rotate(leftArm, toRadians(-29), toRadians(-30), toRadians(-19));
+            animator.rotate(leftArmUnder, toRadians(-17.5), toRadians(30), toRadians(10));
+            animator.rotate(lower, 0, toRadians(5), 0);
+            animator.rotate(leftLeg, 0, toRadians(-10), toRadians(-10));
+            animator.move(leftLeg, 0, 0, 0);
+            animator.rotate(leftLegUnder, toRadians(5), 0, 0);
+            animator.rotate(rightLeg, toRadians(30), toRadians(10), toRadians(10));
+            animator.move(rightLeg, 0, 0, 0);
+            animator.rotate(rightLegUnder, toRadians(5), 0, 0);
+            animator.rotate(axe, toRadians(20), 0, 0);
+            animator.move(axe, 0, 2, 0);
+            animator.endKeyframe();
+
+            animator.setStaticKeyframe(8);
+
+            animator.resetKeyframe(8);
         } else if (animator.setAnimation(EntityNamelessGuardian.ROBUST_ATTACK_ANIMATION)) {
             animator.startKeyframe(0);
             animator.rotate(head, 0, 0, 0);

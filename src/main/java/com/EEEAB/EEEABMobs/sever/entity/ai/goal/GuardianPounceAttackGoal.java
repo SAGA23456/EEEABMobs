@@ -70,7 +70,7 @@ public class GuardianPounceAttackGoal extends AnimationAbstractGoal<EntityNamele
             this.entity.setDeltaMovement(0, this.entity.onGround() ? 0 : this.entity.getDeltaMovement().y(), 0);
             if (target != null) {
                 this.entity.getLookControl().setLookAt(target, 30F, 30F);
-                this.entity.lookAt(target,30F,30F);
+                this.entity.lookAt(target, 30F, 30F);
             }
             int tick = this.entity.getAnimationTick();
             if (tick == 1) {
@@ -150,7 +150,7 @@ public class GuardianPounceAttackGoal extends AnimationAbstractGoal<EntityNamele
         } else if (this.entity.getAnimation() == EntityNamelessGuardian.POUNCE_ATTACK_ANIMATION_3) {
             this.entity.setDeltaMovement(0, entity.getDeltaMovement().y(), 0);
             int maxExtraConsecutive = 2;
-            if (this.consecutive < maxExtraConsecutive && entity.getTarget() != null && this.entity.getAnimationTick() <= 5 && isPowered && this.entity.getMadnessTick() > 200 && this.entity.targetDistance < 16 && this.entity.targetDistance > 4
+            if (this.consecutive < maxExtraConsecutive && entity.getTarget() != null && this.entity.getAnimationTick() <= 6 && this.entity.getAnimationTick() > 1 && isPowered && this.entity.getMadnessTick() > 200 && this.entity.targetDistance < 16 && this.entity.targetDistance > 4
                     && ((this.entity.hasEffect(EffectInit.VERTIGO_EFFECT.get()) && this.entity.getRandom().nextInt(3 - consecutive) == 0) || this.entity.getRandom().nextInt(10) == 0)) {
                 this.consecutive++;
                 this.entity.playAnimation(EntityNamelessGuardian.POUNCE_ATTACK_ANIMATION_1);

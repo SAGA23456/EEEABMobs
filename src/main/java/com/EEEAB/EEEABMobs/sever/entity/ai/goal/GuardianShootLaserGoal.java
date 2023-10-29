@@ -32,17 +32,16 @@ public class GuardianShootLaserGoal extends AnimationCommonGoal<EntityNamelessGu
         }
         if (tick < 11) {
             if (entityTarget != null) {
-                this.entity.getLookControl().setLookAt(entityTarget, 90F, 90F);
+                this.entity.getLookControl().setLookAt(entityTarget, 30F, 30F);
+                this.entity.lookAt(entityTarget, 30F, 30F);
             }
         } else if (tick >= 22 && tick < 100) {
+            this.entity.setYRot(this.entity.yBodyRot);
             float yMaxRotSpeed = 1 + Mth.clamp(2F - Math.abs(this.entity.targetDistance) * 0.1F, 0F, 2F);
             float xMaxRotAngle = 90F;
             if (entityTarget != null) {
                 this.entity.getLookControl().setLookAt(entityTarget.getX(), entityTarget.getY() + entityTarget.getBbHeight() / 2, entityTarget.getZ(), yMaxRotSpeed, xMaxRotAngle);
             }
-            this.entity.setYRot(this.entity.yBodyRot);
-            //double radians = Math.toRadians(this.entity.yBodyRot + 90);
-            //this.entity.setDeltaMovement(-Math.cos(radians) * 0.025F, this.entity.onGround() ? 0 : this.entity.getDeltaMovement().y, -Math.sin(radians) * 0.025F);
         } else {
             this.entity.setYRot(this.entity.yRotO);
         }

@@ -2,17 +2,15 @@ package com.EEEAB.EEEABMobs.sever.entity.impl.namelessguardian;
 
 import com.EEEAB.EEEABMobs.client.particle.ParticleDust;
 import com.EEEAB.EEEABMobs.client.particle.base.ParticleRing;
+import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.*;
 import com.EEEAB.EEEABMobs.sever.entity.impl.effect.EntityGuardianLaser;
 import com.EEEAB.EEEABMobs.sever.entity.NeedStopAiEntity;
+import com.EEEAB.EEEABMobs.sever.entity.util.EEMobType;
 import com.EEEAB.EEEABMobs.sever.init.ItemInit;
 import com.EEEAB.EEEABMobs.client.util.ControlledAnimation;
 import com.EEEAB.EEEABMobs.sever.util.ModDamageSource;
 import com.EEEAB.EEEABMobs.sever.entity.IBoss;
 import com.EEEAB.EEEABMobs.sever.entity.ai.goal.*;
-import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.AnimationActivateGoal;
-import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.AnimationDeactivateGoal;
-import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.AnimationDieGoal;
-import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.AnimationHurtGoal;
 import com.EEEAB.EEEABMobs.sever.entity.ai.goal.animation.base.AnimationAbstractGoal;
 import com.EEEAB.EEEABMobs.sever.entity.ai.navigate.EEPathNavigateGround;
 import com.EEEAB.EEEABMobs.sever.config.EEConfigHandler;
@@ -100,6 +98,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     public static final Animation LEAP_ANIMATION = Animation.create(105);
     public static final Animation SMASH_DOWN_ANIMATION = Animation.create(21);
     public static final Animation LASER_ANIMATION = Animation.create(120);
+    public static final Animation CONCUSSION_ANIMATION = Animation.create(24);
     private static final Animation[] ANIMATIONS = {
             DIE_ANIMATION,
             ROAR_ANIMATION,
@@ -118,7 +117,8 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             WEAK_ANIMATION_3,
             LEAP_ANIMATION,
             SMASH_DOWN_ANIMATION,
-            LASER_ANIMATION
+            LASER_ANIMATION,
+            CONCUSSION_ANIMATION
     };
 
     private final EELookAtGoal lookAtPlayerGoal = new EELookAtGoal(this, Player.class, 8.0F);
@@ -137,6 +137,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     private int guardianInvulnerableTime;/* 额外的无敌时间 */
     private int noUseSkillFromLongTick;/* 用来判断因为特殊情况导致部分技能无法释放,用于计算时长 */
     private boolean executeWeak;
+    private boolean shouldUseSkill;
     private boolean FIRST = true;
     private int attackTick;
     private static final int MADNESS_TICK = 1300;/* 时长正好是BGM高潮部分的时长 */
@@ -284,6 +285,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 this.setNextMadnessTick(getCoolingTimerUtil(MAX_NEXT_MADNESS_TICK, MIN_NEXT_MADNESS_TICK, 0.5F));
             } else if (animation == POUNCE_ATTACK_ANIMATION_1 || animation == LASER_ANIMATION) {
                 this.noUseSkillFromLongTick = 0;
+                this.shouldUseSkill = false;
             }
         }
     }
@@ -368,6 +370,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             }
         });
         this.goalSelector.addGoal(1, new GuardianShootLaserGoal(this, LASER_ANIMATION));
+        this.goalSelector.addGoal(2, new AnimationFullRangeAttackGoal<>(this, CONCUSSION_ANIMATION, 6.5F, 8, 2.5F, 1.0F, true));
         this.goalSelector.addGoal(2, new GuardianAIGoal(this));
         this.goalSelector.addGoal(2, new AnimationDieGoal<>(this));
     }
@@ -409,8 +412,9 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         if (!this.level().isClientSide) {
             if (this.getTarget() != null && !this.getTarget().isAlive()) this.setTarget(null);
 
-            //if (this.isActive()  && this.getAnimation() == NO_ANIMATION && !this.isNoAi())
-            //    this.playAnimation(WEAK_ANIMATION_1);
+            //if (this.isActive() && this.getAnimation() == NO_ANIMATION && !this.isNoAi())
+            //    this.playAnimation(CONCUSSION_ANIMATION);
+            //this.playAnimation(WEAK_ANIMATION_1);
 
             if (this.getTarget() != null && this.isActive() && !this.isPowered() && this.noConflictingTasks() && ((this.FIRST && this.getHealthPercentage() <= 60) || (!this.FIRST && this.getNextMadnessTick() <= 0)) && !this.isNoAi())
                 this.playAnimation(ROAR_ANIMATION);
@@ -448,6 +452,11 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                     this.noUseSkillFromLongTick++;
                 }
             }
+
+            if (this.getTarget() != null && this.active && this.isTimeOutToUseSkill() && !this.shouldUseSkill && this.getAnimation() == NO_ANIMATION && !this.isNoAi()) {
+                this.playAnimation(CONCUSSION_ANIMATION);
+                this.shouldUseSkill = true;
+            }
         }
 
         this.pushEntitiesAway(1.5F, getBbHeight(), 1.5F, 1.5F);
@@ -477,6 +486,24 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             this.setPowered(true);
             this.doRoarEffect();
         }
+
+        if (this.getAnimation() == CONCUSSION_ANIMATION) {
+            this.setDeltaMovement(0, this.getDeltaMovement().y, 0);
+            if (tick == 8) {
+                ModParticleUtils.sphericalParticleOutburst(level(), this, new ParticleOptions[]{ParticleTypes.SOUL_FIRE_FLAME, ParticleInit.GUARDIAN_SPARK.get()}, 2.5F, 10F, 0, 0, 3);
+                EntityCameraShake.cameraShake(level(), position(), 30, 0.125F, 0, 20);
+            }
+            if (this.getTarget() != null) this.lookAt(getTarget(), 30F, 30F);
+        }
+
+        //if ((this.fallDistance > 0.2 && !this.onGround() &&) || this.getAnimation() == DODGE_ANIMATION)
+        //    this.shouldPlayLandAnimation = true;
+        //if (this.onGround() && this.shouldPlayLandAnimation && this.getAnimation() != DODGE_ANIMATION) {
+        //    if (!this.level().isClientSide && this.getAnimation() == NO_ANIMATION) {
+        //        this.playAnimation(LANDING_ANIMATION);
+        //        this.shouldPlayLandAnimation = false;
+        //    }
+        //}
 
         if (this.getAnimation() == ATTACK_ANIMATION_1 && tick == 15) {
             this.playSound(SoundInit.NAMELESS_GUARDIAN_WHOOSH.get(), 1.95f, this.getVoicePitch());
@@ -834,10 +861,6 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             random = guardian.getRandom();
         }
 
-        @Override
-        public boolean requiresUpdateEveryTick() {
-            return true;//使得ai更加灵敏,但负载也会略微增加?
-        }
 
         @Override
         public void start() {
@@ -854,6 +877,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
         @Override
         public void stop() {
             this.guardian.getNavigation().stop();
+            this.isPowered = false;
         }
 
         @Override
@@ -884,7 +908,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             if (this.guardian.attackTick <= 0 && this.guardian.getSensing().hasLineOfSight(target)) {
                 boolean checkAttackHeight = target.getY() - guardian.getY() < 4 && target.getY() - this.guardian.getY() > -4;
                 double entityRelativeAngle = ModEntityUtils.getTargetRelativeAngle(this.guardian, target);
-                boolean canRobust = dist <= 144D && this.guardian.isPowered() && this.guardian.getMadnessTick() <= 0;
+                boolean canRobust = dist <= 144D && this.isPowered && this.guardian.getMadnessTick() <= 0;
                 boolean canSmash = (checkAttackHeight || target.onGround()) && (this.random.nextFloat() < 0.6F && dist <= (this.isPowered ? 50D : 25D) && this.guardian.getSmashTick() <= 0);
                 if (dist < 16D && !canSmash && !canRobust) {
                     this.guardian.playAnimation(ATTACK_ANIMATION_1);
@@ -895,8 +919,8 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                     this.guardian.smashTick = this.guardian.getCoolingTimerUtil(MAX_SMASH_ATTACK_TICK, MIN_SMASH_ATTACK_TICK, 0.2F);
                 }
 
-                boolean canLaser = this.random.nextFloat() < 0.6F && this.isPowered && (((checkAttackHeight ? this.guardian.targetDistance > 10.0D : this.guardian.targetDistance > 4.0D) && (entityRelativeAngle < 60.0 || entityRelativeAngle > 300) && this.guardian.targetDistance < EntityGuardianLaser.GUARDIAN_RADIUS && this.guardian.getLaserTick() <= 0) || this.guardian.isTimeOutToUseSkill());
-                boolean canPouch = checkAttackHeight && (this.random.nextFloat() < 0.6F && this.guardian.targetDistance > 6.0D && this.guardian.targetDistance < 16.0 && this.guardian.getPounceTick() <= 0 || this.guardian.isTimeOutToUseSkill());
+                boolean canLaser = this.random.nextFloat() < 0.6F && this.isPowered && (((checkAttackHeight ? this.guardian.targetDistance > 10.0D : this.guardian.targetDistance > 4.0D) && (entityRelativeAngle < 60.0 || entityRelativeAngle > 300) && this.guardian.targetDistance < EntityGuardianLaser.GUARDIAN_RADIUS && this.guardian.getLaserTick() <= 0) || this.guardian.isTimeOutToUseSkill() && this.guardian.shouldUseSkill);
+                boolean canPouch = checkAttackHeight && (this.random.nextFloat() < 0.6F && this.guardian.targetDistance > 6.0D && this.guardian.targetDistance < 16.0 && this.guardian.getPounceTick() <= 0 || this.guardian.isTimeOutToUseSkill() && this.guardian.shouldUseSkill);
                 boolean canLeap = this.random.nextFloat() < 0.6F && this.guardian.targetDistance > 12.0D && this.guardian.targetDistance < 24.0 && this.guardian.getLeapTick() <= 0;
                 if (canLaser) {
                     this.guardian.playAnimation(LASER_ANIMATION);
@@ -1047,7 +1071,6 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 this.playSound(SoundInit.NAMELESS_GUARDIAN_MADNESS.get(), 1.5F, 0.92F);
                 EntityCameraShake.cameraShake(level(), position(), 20, 0.125F, 20, 20);
             }
-
             List<LivingEntity> entities = getNearByLivingEntities(8);
             for (LivingEntity entity : entities) {
                 if (entity == this) continue;
@@ -1056,7 +1079,6 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 double distance = distanceTo(entity) - 4;
                 entity.setDeltaMovement(entity.getDeltaMovement().add(Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle), 0, Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle)));
             }
-
             if (!this.level().isClientSide && tick % 10 == 0) this.level().broadcastEntityEvent(this, (byte) 6);
         }
     }
@@ -1170,7 +1192,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 float yaw = (float) Math.toRadians(-this.getYRot());
                 float pitch = (float) Math.toRadians(-this.getXRot());
                 if (tick % 3 == 0) {
-                    this.level().addParticle(new ParticleRing.RingData(yaw, -pitch, 40, 0.8f, 0.8f, 0.9f, alpha, 50f, false, ParticleRing.EnumRingBehavior.GROW_THEN_SHRINK), x + 6f * motionX, y + 1.5f * motionY, z + 6f * motionZ, 0, 0, 0);
+                    this.level().addParticle(new ParticleRing.RingData(yaw, pitch, 40, 0.8f, 0.8f, 0.9f, alpha, 50f, false, ParticleRing.EnumRingBehavior.GROW_THEN_SHRINK), x + 6f * motionX, y + 1.5f * motionY, z + 6f * motionZ, 0, 0, 0);
                 }
             }
 
@@ -1371,5 +1393,10 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
     @Override
     protected float getSoundVolume() {
         return this.getTarget() == null ? 0.5F : super.getSoundVolume();
+    }
+
+    @Override
+    public @NotNull MobType getMobType() {
+        return EEMobType.NAMELESS_GUARDIAN;
     }
 }
