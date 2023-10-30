@@ -4,7 +4,7 @@ license="GNU LESSER GENERAL PUBLIC LICENSE"
 
 [[mods]]
     modId="eeeabsmobs"
-    version="0.2"
+    version="0.3"
     displayName="EEEAB's Mobs"
     logoFile="banner.png"
     authors="EEEAB"
