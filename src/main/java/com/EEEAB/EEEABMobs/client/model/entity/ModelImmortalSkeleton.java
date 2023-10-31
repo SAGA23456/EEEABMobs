@@ -23,12 +23,14 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
     private final AdvancedModelBox heart;
     private final AdvancedModelBox outerBody;
     private final AdvancedModelBox armorBody;
-    private final AdvancedModelBox handLeftArm;
     private final AdvancedModelBox armorLeftArm;
-    private final AdvancedModelBox handRightArm;
+    //private final AdvancedModelBox handLeftArm;
+    //private final AdvancedModelBox handRightArm;
     private final AdvancedModelBox armorRightArm;
     private final AdvancedModelBox armorLeftLeg;
     private final AdvancedModelBox armorRightLeg;
+    private final AdvancedModelBox armorLeftFoot;
+    private final AdvancedModelBox armorRightFoot;
 
     public ModelImmortalSkeleton() {
         texHeight = 128;
@@ -94,7 +96,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorBody = new AdvancedModelBox(this, "armorBody");
         armorBody.setPos(0.0F, 0.0F, 0.0F);
         body.addChild(armorBody);
-        armorBody.setTextureOffset(72, 18).addBox(-4.0F, 0.75F, -1.75F, 8.0F, 12.0F, 4.0F, 0.4F);
+        armorBody.setTextureOffset(72, 18).addBox(-4.0F, 0.75F, -1.75F, 8.0F, 12.0F, 4.0F, 0.75F);
 
         leftArm = new AdvancedModelBox(this, "leftArm");
         offsetAndRotation(leftArm, 5.1F, -10.5F, 0.0F, 0.0F, 0.0F, -0.0873F);
@@ -102,32 +104,32 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         leftArm.mirror = true;
         leftArm.setTextureOffset(34, 1).addBox(-1.1F, -2.0F, -1.0F, 2.0F, 12.5F, 2.0F, 0.4F);
 
-        handLeftArm = new AdvancedModelBox(this, "handLeftArm");
-        handLeftArm.setPos(-0.1F, 10.5F, -1.1F);
-        leftArm.addChild(handLeftArm);
-        //handLeftArm.mirror=true;
-        handLeftArm.setTextureOffset(-1, -1).addBox(-1.1F, -1.0F, 0.1F, 1.0F, 1.0F, 1.0F, 0.4F);
+        //handLeftArm = new AdvancedModelBox(this, "handLeftArm");
+        //handLeftArm.setPos(-0.1F, 10.5F, -1.1F);
+        //leftArm.addChild(handLeftArm);
+        ////handLeftArm.mirror=true;
+        //handLeftArm.setTextureOffset(-1, -1).addBox(-1.1F, -1.0F, 0.1F, 1.0F, 1.0F, 1.0F, 0.4F);
 
         armorLeftArm = new AdvancedModelBox(this, "armorLeftArm");
         armorLeftArm.setPos(0.0F, 0.0F, 0.0F);
         leftArm.addChild(armorLeftArm);
         //armorLeftArm.mirror=true;
-        armorLeftArm.setTextureOffset(45, 1).addBox(-1.1F, -2.0F, -1.0F, 2.5F, 12.0F, 2.5F, 1F);
+        armorLeftArm.setTextureOffset(60, 1).addBox(-1.1F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.75F);
 
         rightArm = new AdvancedModelBox(this, "rightArm");
         offsetAndRotation(rightArm, -6.0F, -10.5F, 0.0F, 0.0F, 0.0F, 0.0873F);
         upper.addChild(rightArm);
         rightArm.setTextureOffset(34, 1).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 12.5F, 2.0F, 0.4F);
 
-        handRightArm = new AdvancedModelBox(this, "handRightArm");
-        handRightArm.setPos(0.0F, 10.5F, -1.1F);
-        rightArm.addChild(handRightArm);
-        handRightArm.setTextureOffset(-1, 0).addBox(-1.4F, -1.0F, 0.1F, 1.0F, 1.0F, 1.0F, 0.4F);
+        //handRightArm = new AdvancedModelBox(this, "handRightArm");
+        //handRightArm.setPos(0.0F, 10.5F, -1.1F);
+        //rightArm.addChild(handRightArm);
+        //handRightArm.setTextureOffset(-1, 0).addBox(-1.4F, -1.0F, 0.1F, 1.0F, 1.0F, 1.0F, 0.4F);
 
         armorRightArm = new AdvancedModelBox(this, "armorRightArm");
         armorRightArm.setPos(0.0F, 0.0F, 0.0F);
         rightArm.addChild(armorRightArm);
-        armorRightArm.setTextureOffset(45, 1).addBox(-1.5F, -2.0F, -1.0F, 2.5F, 12.0F, 2.5F, 1F);
+        armorRightArm.setTextureOffset(60, 1).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.75F);
 
         lower = new AdvancedModelBox(this, "lower");
         lower.setPos(0.0F, 0.0F, 0.0F);
@@ -142,8 +144,14 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorLeftLeg = new AdvancedModelBox(this, "armorLeftLeg");
         armorLeftLeg.setPos(-0.2F, 0.0F, 0.0F);
         leftLeg.addChild(armorLeftLeg);
-        //armorLeftLeg.mirror = true;
-        armorLeftLeg.setTextureOffset(59, 1).addBox(-1.2F, 0.0F, -1.2F, 2.5F, 12.0F, 2.5F, 0.6F);
+        armorLeftLeg.mirror = true;
+        armorLeftLeg.setTextureOffset(78, 1).addBox(-2.0F, 0.0F, -1.8F, 4.0F, 12.0F, 4.0F, 0.5F);
+
+        armorLeftFoot = new AdvancedModelBox(this, "armorLeftFoot");
+        armorLeftFoot.setPos(-0.2F, 0.0F, 0.0F);
+        leftLeg.addChild(armorLeftFoot);
+        armorLeftFoot.mirror = true;
+        armorLeftFoot.setTextureOffset(43, 1).addBox(-2.5F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.75F);
 
         rightLeg = new AdvancedModelBox(this, "rightLeg");
         rightLeg.setPos(-2.0F, -12.0F, 0.0F);
@@ -153,12 +161,15 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
         armorRightLeg = new AdvancedModelBox(this, "armorRightLeg");
         armorRightLeg.setPos(0.0F, 0.0F, 0.0F);
         rightLeg.addChild(armorRightLeg);
-        //armorLeftLeg.mirror = true;
-        armorRightLeg.setTextureOffset(75, 1).addBox(-1.2F, 0.0F, -1.2F, 2.5F, 12.0F, 2.5F, 0.6F);
+        armorRightLeg.setTextureOffset(78, 1).addBox(-2.0F, 0.0F, -1.8F, 4.0F, 12.0F, 4.0F, 0.5F);
+
+        armorRightFoot = new AdvancedModelBox(this, "armorRightFoot");
+        armorRightFoot.setPos(0.0F, 0.0F, 0.0F);
+        rightLeg.addChild(armorRightFoot);
+        armorRightFoot.setTextureOffset(43, 1).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.75F);
 
         animator = ModelAnimator.create();
         updateDefaultPose();
-
     }
 
     @Override
@@ -170,7 +181,8 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
     public Iterable<AdvancedModelBox> getAllParts() {
         return ImmutableList.of(this.root, this.upper, this.lower, this.head, this.body, this.leftArm, this.rightArm,
                 this.leftLeg, this.rightLeg, this.outerHead, this.armorHead, this.lowerJaw, this.cube_r1, this.hemal, this.hemal_r1,
-                this.heart, this.outerBody, this.armorBody, this.handLeftArm, this.armorLeftArm, this.handRightArm, this.armorRightArm, this.armorLeftLeg, this.armorRightLeg);
+                this.heart, this.outerBody, this.armorBody, /*this.handLeftArm,*/ this.armorLeftArm/*, this.handRightArm*/, this.armorRightArm,
+                this.armorLeftLeg, this.armorRightLeg, this.armorLeftFoot, this.armorRightFoot);
     }
 
     @Override
@@ -252,7 +264,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
             animator.move(root, 0F, -3.0F, 0F);
             animator.rotate(head, toRadians(-18.45), toRadians(-25.85), toRadians(8.71));
             animator.rotate(rightLeg, 0, toRadians(7.5), toRadians(5));
-            animator.rotate(leftLeg, 0, toRadians(7.5), toRadians(5));
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-5));
             animator.endKeyframe();
 
             animator.startKeyframe(4);//1.32
@@ -263,7 +275,7 @@ public class ModelImmortalSkeleton extends ModelImmortalBase<AbstractImmortalSke
             animator.move(root, 0F, -2.0F, 0F);
             animator.rotate(head, toRadians(-20.7536), toRadians(-43.0795), toRadians(14.5108));
             animator.rotate(rightLeg, 0, toRadians(7.5), toRadians(5));
-            animator.rotate(leftLeg, 0, toRadians(7.5), toRadians(5));
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-5));
             animator.endKeyframe();
 
             animator.setStaticKeyframe(34);

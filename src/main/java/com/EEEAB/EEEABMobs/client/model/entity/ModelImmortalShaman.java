@@ -387,7 +387,7 @@ public class ModelImmortalShaman extends ModelImmortalBase<EntityImmortalShaman>
             animator.move(root, 0F, -3.0F, 0F);
             animator.rotate(head, toRadians(-18.45), toRadians(-25.85), toRadians(8.71));
             animator.rotate(rightLeg, 0, toRadians(7.5), toRadians(5));
-            animator.rotate(leftLeg, 0, toRadians(7.5), toRadians(5));
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-5));
             animator.endKeyframe();
 
             animator.startKeyframe(4);//1.32
@@ -398,7 +398,7 @@ public class ModelImmortalShaman extends ModelImmortalBase<EntityImmortalShaman>
             animator.move(root, 0F, -2.0F, 0F);
             animator.rotate(head, toRadians(-20.7536), toRadians(-43.0795), toRadians(14.5108));
             animator.rotate(rightLeg, 0, toRadians(7.5), toRadians(5));
-            animator.rotate(leftLeg, 0, toRadians(7.5), toRadians(5));
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-5));
             animator.endKeyframe();
 
             animator.setStaticKeyframe(15);//2.08
@@ -411,7 +411,7 @@ public class ModelImmortalShaman extends ModelImmortalBase<EntityImmortalShaman>
             animator.move(root, 0F, 10.0F, 0F);
             animator.rotate(head, toRadians(-20.7536), toRadians(-43.0795), toRadians(14.5108));
             animator.rotate(rightLeg, 0, toRadians(7.5), toRadians(5));
-            animator.rotate(leftLeg, 0, toRadians(7.5), toRadians(5));
+            animator.rotate(leftLeg, 0, toRadians(-7.5), toRadians(-5));
             animator.endKeyframe();
 
             animator.setStaticKeyframe(26);

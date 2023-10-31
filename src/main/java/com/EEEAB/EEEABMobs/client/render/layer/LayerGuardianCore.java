@@ -30,7 +30,7 @@ public class LayerGuardianCore extends RenderLayer<EntityNamelessGuardian, Model
             float timer = entity.coreControlled.getPrevTimer();
             //float speed = defaultSpeed + timer * 0.05F;
             //float brightness = Mth.clamp((Mth.cos(ageInTicks * speed) * 2.0F) - 1.0F, timer * 0.05F, 1F);
-            float brightness = timer * 0.098F;
+            float brightness = timer * 0.08F;
             this.renderLayer(stack, bufferSource.getBuffer(RenderType.eyes(location)), packedLightIn, brightness, brightness, brightness);
         }
     }
