@@ -138,7 +138,7 @@ public class EntityImmortalShaman extends EntityImmortal implements IEntity, Ran
         this.goalSelector.addGoal(1, new ShamanAnimationCommonGoal(this, SPELL_CASTING_HEAL_ANIMATION));
         this.goalSelector.addGoal(1, new ShamanAnimationCommonGoal(this, SPELL_CASTING_WOLOLO_ANIMATION));
         this.goalSelector.addGoal(1, new ShamanAnimationCommonGoal(this, AVOID_ANIMATION));
-        this.goalSelector.addGoal(1, new AnimationFullRangeAttackGoal<>(this, SPELL_CASTING_FR_ATTACK_ANIMATION, 4.5F, 14, 3.0F, 5.0F, true) {
+        this.goalSelector.addGoal(1, new AnimationFullRangeAttackGoal<>(this, SPELL_CASTING_FR_ATTACK_ANIMATION, 4.5F, 14, 2.0F, 5.0F, true) {
             @Override
             public void onHit(LivingEntity entity) {
                 if (entity instanceof Player player) {

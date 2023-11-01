@@ -110,10 +110,9 @@ public class EntityTestllager extends EEEABMobLibrary implements IEntity {
     @Override
     public boolean hurt(DamageSource source, float damage) {
         Entity entity = source.getEntity();
-        if (level().isClientSide) {
-            return false;
-        } else if (entity != null) {
-            sendSystemMessage(Component.keybind("Damage source: " + entity.getDisplayName().getString() + " damage: " + damage));
+        if (entity != null) {
+            //服务端崩溃
+            //sendSystemMessage(Component.keybind("Damage source: " + entity.getDisplayName().getString() + " damage: " + damage));
             damage = 0;
             super.hurt(source, damage);
         } else if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {

@@ -45,7 +45,7 @@ public class HandlerRegister {
 
     @SubscribeEvent
     public static void registerRenderers(final EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(EntityInit.IMMORTAL_SKELETON.get(),RenderImmortalSkeleton::new);
+        event.registerEntityRenderer(EntityInit.IMMORTAL_SKELETON.get(), RenderImmortalSkeleton::new);
         event.registerEntityRenderer(EntityInit.IMMORTAL_KNIGHT.get(), RenderImmortalSkeleton::new);
         //event.registerEntityRenderer(EntityInit.IMMORTAL_SKELETON.get(), GeoRenderImmortalSkeleton::new);
         //event.registerEntityRenderer(EntityInit.IMMORTAL_KNIGHT.get(), GeoRenderImmortalKnight::new);
@@ -53,6 +53,7 @@ public class HandlerRegister {
         event.registerEntityRenderer(EntityInit.IMMORTAL_SHAMAN.get(), RenderImmortalShaman::new);
         event.registerEntityRenderer(EntityInit.IMMORTAL_GOLEM.get(), RenderImmortalGolem::new);
         event.registerEntityRenderer(EntityInit.NAMELESS_GUARDIAN.get(), RenderNamelessGuardian::new);
+        event.registerEntityRenderer(EntityInit.IMMORTAL.get(), RenderTheImmortal::new);
         //event.registerEntityRenderer(EntityInit.TESTLLAGER.get(), GeoRenderTestllager::new);
         event.registerEntityRenderer(EntityInit.TESTLLAGER.get(), RenderTestllager::new);
 
@@ -65,6 +66,7 @@ public class HandlerRegister {
         event.registerEntityRenderer(EntityInit.SCORCH.get(), RenderEntityScorch::new);
         event.registerEntityRenderer(EntityInit.EYE_OF_STRUCTURE.get(), (context) -> new ThrownItemRenderer<>(context, 1.5F, true));
         event.registerEntityRenderer(EntityInit.TEST.get(), RenderTest::new);
+
 
         event.registerBlockEntityRenderer(BlockEntityInit.ENTITY_TOMBSTONE.get(), RenderBlockTombstone::new);
     }

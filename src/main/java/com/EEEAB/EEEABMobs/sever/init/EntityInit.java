@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
 @Mod.EventBusSubscriber(modid = EEEABMobs.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityInit {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, EEEABMobs.MOD_ID);
@@ -67,10 +68,11 @@ public class EntityInit {
                             .build(new ResourceLocation(EEEABMobs.MOD_ID, "testllager").toString()));
 
 
-//    public static final RegistryObject<EntityType<EntityImmortal>> IMMORTAL =
-//            ENTITIES.register("immortal",
-//                    () -> EntityType.Builder.<EntityImmortal>of(EntityImmortal::new, MobCategory.MONSTER)
-//                            .sized(0.6f, 2.0f).build(new ResourceLocation(EEEABMobs.MOD_ID, "immortal").toString()));
+    public static final RegistryObject<EntityType<EntityTheImmortal>> IMMORTAL =
+            ENTITIES.register("immortal",
+                    () -> EntityType.Builder.<EntityTheImmortal>of(EntityTheImmortal::new, MobCategory.MONSTER)
+                            .sized(0.6f, 2.0f).fireImmune().updateInterval(1)
+                            .build(new ResourceLocation(EEEABMobs.MOD_ID, "immortal").toString()));
 
 
     public static final RegistryObject<EntityType<EntityTest>> TEST =
@@ -135,6 +137,7 @@ public class EntityInit {
         event.put(EntityInit.IMMORTAL_SHAMAN.get(), EntityImmortalShaman.setAttributes().build());
         event.put(EntityInit.IMMORTAL_GOLEM.get(), EntityImmortalGolem.setAttributes().build());
         event.put(EntityInit.NAMELESS_GUARDIAN.get(), EntityNamelessGuardian.setAttributes().build());
+        event.put(EntityInit.IMMORTAL.get(), EntityTheImmortal.setAttributes().build());
         event.put(EntityInit.TESTLLAGER.get(), EntityTestllager.setAttributes().build());
         event.put(EntityInit.TEST.get(), setCommonAttributes());
     }

@@ -22,6 +22,7 @@ import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -46,17 +47,20 @@ public final class HandlerServerEvent {
             if (capability != null) capability.onInit((LivingEntity) entity);
         }
 
-        if (entity instanceof AbstractGolem && !(entity instanceof Shulker)) {
-            ((PathfinderMob) entity).targetSelector.addGoal(2, new NearestAttackableTargetGoal<>((PathfinderMob) entity, EntityImmortal.class, 0, true, false, null));
+        if (entity instanceof AbstractGolem abstractGolem && !(abstractGolem instanceof Shulker)) {
+            abstractGolem.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(abstractGolem, EntityImmortal.class, 5, false, false, null));
         }
-        if (entity instanceof AbstractSkeleton) {
-            ((PathfinderMob) entity).targetSelector.addGoal(3, new NearestAttackableTargetGoal<>((PathfinderMob) entity, EntityImmortal.class, 0, true, false, null));
+        if (entity instanceof AbstractSkeleton abstractSkeleton) {
+            abstractSkeleton.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(abstractSkeleton, EntityImmortal.class, 0, true, false, null));
         }
-        if (entity instanceof Zombie && !(entity instanceof ZombifiedPiglin)) {
-            ((PathfinderMob) entity).targetSelector.addGoal(3, new NearestAttackableTargetGoal<>((PathfinderMob) entity, EntityImmortal.class, 0, true, false, null));
+        if (entity instanceof Zombie zombie && !(zombie instanceof ZombifiedPiglin)) {
+            zombie.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(zombie, EntityImmortal.class, 0, true, false, null));
         }
         if (entity instanceof AbstractVillager villager) {
             villager.goalSelector.addGoal(3, new AvoidEntityGoal<>(villager, EntityImmortal.class, 6.0F, 1.0D, 1.2D));
+        }
+        if (entity instanceof Raider raider && !(raider instanceof SpellcasterIllager)) {
+            raider.goalSelector.addGoal(5, new NearestAttackableTargetGoal<>(raider, EntityImmortal.class, 5, true, false, null));
         }
         //if (entity instanceof Evoker) {
         //    ((PathfinderMob) entity).targetSelector.addGoal(5, (new NearestAttackableTargetGoal<>((PathfinderMob) entity, EntityImmortalShaman.class, true)).setUnseenMemoryTicks(300));
@@ -291,7 +295,6 @@ public final class HandlerServerEvent {
             }
         }
     }
-
 
 
     ////附加功能事件

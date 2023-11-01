@@ -32,7 +32,9 @@ public class GuardianLeapGoal extends AnimationCommonGoal<EntityNamelessGuardian
                     //x = target.getX() - entity.getX();
                     //y = target.getY() - entity.getY();
                     //z = target.getZ() - entity.getZ();
-                    entity.setDeltaMovement(vec3.x * 0.155D, 1.2 + Mth.clamp(vec3.y * 0.055D, 0D, 10D), vec3.z * 0.155D);
+                    double speedX = entity.isInWater() ? 0.31D : 0.155D;
+                    double speedY = entity.isInWater() ? 0.11D : 0.055D;
+                    entity.setDeltaMovement(vec3.x * speedX, 1.2 + Mth.clamp(vec3.y * speedY, 0D, 12D), vec3.z * speedX);
                 }
             }
         } else if (tick == 12) {
