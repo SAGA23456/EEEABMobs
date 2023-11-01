@@ -6,6 +6,7 @@ license="GNU LESSER GENERAL PUBLIC LICENSE"
     modId="eeeabsmobs"
     version="0.3"
     displayName="EEEAB's Mobs"
+    displayURL="https://www.curseforge.com/minecraft/mc-mods/eeeabs-mobs"
     logoFile="banner.png"
     authors="EEEAB"
     description='''EEEAB's Mobs adds a variety of challenging mobs to your Minecraft world!'''

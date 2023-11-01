@@ -59,6 +59,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -492,6 +493,8 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             if (tick == 8) {
                 ModParticleUtils.sphericalParticleOutburst(level(), this, new ParticleOptions[]{ParticleTypes.SOUL_FIRE_FLAME, ParticleInit.GUARDIAN_SPARK.get()}, 2.5F, 10F, 0, 0, 3);
                 EntityCameraShake.cameraShake(level(), position(), 30, 0.125F, 0, 20);
+            } else if (tick > 8) {
+                this.strongKnockBlock();
             }
             if (this.getTarget() != null) this.lookAt(getTarget(), 30F, 30F);
         }
@@ -585,6 +588,26 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
             if (this.frame % 5 == 1 && this.getAnimation() == POUNCE_ATTACK_ANIMATION_2) {
                 this.level().playLocalSound(getX(), getY(), getZ(), SoundInit.NAMELESS_GUARDIAN_STEP.get(), this.getSoundSource(), 1F, 1.05F, false);
             }
+        }
+    }
+
+    private void strongKnockBlock() {
+        List<Entity> entities = getNearByEntities(Entity.class, 8, 8, 8, 8);
+        double mx = 0, my = 0;
+        for (Entity entity : entities) {
+            if (entity instanceof Projectile) {
+                double angle = (getAngleBetweenEntities(this, entity) + 90) * Math.PI / 180;
+                mx = -Math.cos(angle);
+                my = -Math.sin(angle);
+            } else if (entity instanceof LivingEntity) {
+                if (entity == this) continue;
+                if (entity instanceof Player player && player.isCreative()) continue;
+                double angle = (getAngleBetweenEntities(this, entity) + 90) * Math.PI / 180;
+                double distance = distanceTo(entity) - 4;
+                mx = Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle);
+                my = Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle);
+            }
+            entity.setDeltaMovement(entity.getDeltaMovement().add(mx, 0, my));
         }
     }
 
@@ -1071,14 +1094,7 @@ public class EntityNamelessGuardian extends EEEABMobLibrary implements IBoss, Gl
                 this.playSound(SoundInit.NAMELESS_GUARDIAN_MADNESS.get(), 1.5F, 0.92F);
                 EntityCameraShake.cameraShake(level(), position(), 20, 0.125F, 20, 20);
             }
-            List<LivingEntity> entities = getNearByLivingEntities(8);
-            for (LivingEntity entity : entities) {
-                if (entity == this) continue;
-                if (entity instanceof Player player && player.isCreative()) continue;
-                double angle = (getAngleBetweenEntities(this, entity) + 90) * Math.PI / 180;
-                double distance = distanceTo(entity) - 4;
-                entity.setDeltaMovement(entity.getDeltaMovement().add(Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle), 0, Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle)));
-            }
+            this.strongKnockBlock();
             if (!this.level().isClientSide && tick % 10 == 0) this.level().broadcastEntityEvent(this, (byte) 6);
         }
     }

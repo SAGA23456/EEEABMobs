@@ -150,7 +150,7 @@ public class EEConfigHandler {
             suckBloodFactor = BUILDER.comment("The upper limit of vampire is based on the percentage of maximum health").
                     defineInRange("Suck blood factor", 0.05, 0, 1);
             combatConfig = new AttributeConfig(1, 1);
-            maximumDamageCap = new GeneralDamageCap(0.025F);
+            maximumDamageCap = new GeneralDamageCap(0.05F);
             builder.pop();
         }
 
