@@ -19,6 +19,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -30,6 +31,7 @@ import net.minecraft.world.phys.AABB;
 
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 
 public class EntityImmortalKnight extends AbstractImmortalSkeleton implements IEntity {
     private static final UniformInt ALERT_INTERVAL = TimeUtil.rangeOfSeconds(3, 5);
@@ -51,7 +53,7 @@ public class EntityImmortalKnight extends AbstractImmortalSkeleton implements IE
 
     @Override
     protected void registerCustomGoals() {
-        this.goalSelector.addGoal(1, new AnimationCommonGoal<>(this, ROAR_ANIMATION) {
+        this.goalSelector.addGoal(1, new AnimationCommonGoal<>(this, ROAR_ANIMATION, EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP)) {
             @Override
             public void tick() {
                 super.tick();
