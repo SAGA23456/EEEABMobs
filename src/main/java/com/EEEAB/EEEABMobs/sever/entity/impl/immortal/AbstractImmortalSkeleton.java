@@ -96,7 +96,6 @@ public abstract class AbstractImmortalSkeleton extends EntityImmortal implements
         this.goalSelector.addGoal(1, new AnimationDieGoal<>(this));
         this.goalSelector.addGoal(1, new AnimationHurtGoal<>(this, false));
         this.goalSelector.addGoal(1, new AnimationActivateGoal<>(this, SPAWN_ANIMATION));
-        this.goalSelector.addGoal(1, new AnimationBlockGoal<>(this, BLOCK_ANIMATION));
         this.goalSelector.addGoal(1, new AnimationProjectileAttackGoal<>(this, RANGED_ATTACK_ANIMATION, 19, null));
         this.goalSelector.addGoal(1, new AnimationAttackGoal<>(this, MELEE_ATTACK_1_ANIMATION, 6, 3.0f, 1.0f, 1.0f));
         this.goalSelector.addGoal(1, new AnimationAttackGoal<>(this, MELEE_ATTACK_2_ANIMATION, 8, 3.0f, 1.0f, 15.0f));
