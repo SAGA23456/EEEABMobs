@@ -16,8 +16,8 @@ public class RenderImmortalSkeleton extends MobRenderer<AbstractImmortalSkeleton
 
     public RenderImmortalSkeleton(EntityRendererProvider.Context context) {
         super(context, new ModelImmortalSkeleton(), 0.5F);
-        this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
         this.addLayer(new LayerGlow<>(this, new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton_glow.png")));
+        this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
         this.addLayer(new LayerMobModelOuter<>(this, new ResourceLocation(EEEABMobs.MOD_ID, "textures/entity/immortal_skeleton/immortal_skeleton_armor.png"), false) {
             @Override
             protected boolean test(AbstractImmortalSkeleton immortalSkeleton) {
